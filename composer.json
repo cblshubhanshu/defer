@@ -1,0 +1,24 @@
+{
+    "name": "codebrew/defer",
+    "version": "0.1.0",
+    "description": "Service to register callbacks to be executed after response is sent to the client",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Codebrew\\Defer\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Shubhanshu Tomar",
+            "email": "shubhanshu@codebrewinnovations.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "laravel/framework": "^8.0"
+    }
+}
