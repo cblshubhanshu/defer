@@ -3,6 +3,7 @@
 namespace Codebrew\Defer\Services;
 
 use Codebrew\Defer\DeferredCallback;
+use Codebrew\Defer\Contracts\DeferredServiceInterface;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use function count;
 use function logs;
 use function report;
 
-class DeferredService
+class DeferredService implements DeferredServiceInterface
 {
     /** @var array<string, DeferredCallback> */
     protected array $registeredCallbacks = [];
@@ -23,15 +24,7 @@ class DeferredService
     {
     }
 
-    /**
-     * Registers a new callback to execute after response is sent.
-     *
-     * @param \Closure $closure
-     * @param bool     $always
-     *
-     * @return DeferredCallback
-     */
-    public function registerCallback(\Closure $closure, $always = false)
+    public function registerCallback(\Closure $closure, bool $always = false): DeferredCallback
     {
         $registrationKey = Uuid::uuid1()->toString();
 
@@ -44,14 +37,7 @@ class DeferredService
         return $registeredCallback;
     }
 
-    /**
-     * Forget a registered callback by name, removing it from the queue and returning the callback.
-     *
-     * @param string $name
-     *
-     * @return ?DeferredCallback
-     */
-    public function forget(string $name)
+    public function forget(string $name): ?DeferredCallback
     {
         $registeredCallback = $this->registeredCallbacks[$name] ?? null;
 
@@ -62,13 +48,6 @@ class DeferredService
         return $registeredCallback;
     }
 
-    /**
-     * Dispatches all the queued callback once the application termination starts.
-     *
-     * @param ?Response $response
-     *
-     * @return void
-     */
     public function dispatchDeferredCalls(?Response $response = null)
     {
         $databaseConnection = call_user_func([DB::connection(), 'getName']);

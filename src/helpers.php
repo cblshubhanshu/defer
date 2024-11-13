@@ -1,6 +1,7 @@
 <?php
 
 use Codebrew\Defer\DeferredCallback;
+use Codebrew\Defer\Facades\Defer;
 
 if (! function_exists('_defer')) {
     /**
@@ -16,18 +17,18 @@ if (! function_exists('_defer')) {
      * @param ?\Closure(): void $closure Callback to register for execution after response
      * @param bool              $always  Execute this callback regardless of whether the response was an error
      *
-     * @return \App\Services\DeferredService|DeferredClass
+     * @return \Codebrew\Defer\Contracts\DeferredServiceInterface|DeferredClass
      */
     function _defer(?\Closure $closure = null, bool $always = false)
     {
         if (is_null($closure)) {
-            return app('_defer');
+            return Defer::getFacadeRoot();
         }
 
         if (app()->runningUnitTests()) {
             ($defer = new DeferredCallback(\Ramsey\Uuid\Uuid::uuid1()->toString(), $closure, $always))->handle();
         } else {
-            $defer = app('_defer')->registerCallback($closure, $always);
+            $defer = Defer::registerCallback($closure, $always);
         }
 
         return $defer;
