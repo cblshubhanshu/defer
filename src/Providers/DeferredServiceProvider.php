@@ -31,5 +31,22 @@ class DeferredServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->make('_defer');
+        $this->registerConsoleCallbacks();
+    }
+
+    protected function registerConsoleCallbacks()
+    {
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
+
+        if (! method_exists($this->app, 'terminating')) {
+            return;
+        }
+
+
+        [$this->app, 'terminating'](function () {
+            $this->app->make('_defer')->dispatchDeferredCalls();
+        });
     }
 }

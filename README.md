@@ -46,35 +46,6 @@ protected $middleware = [
 ];
 ```
 
-If you want to execute deferrable callbacks in the console context, add the following to you `app/Console/Kernel.php`.
-
-``` php
-/**
-    * Execute bound [`\Codebrew\Defer\DeferredCallback`] callbacks during termination
-    * before finally terminating the application.
-    *
-    * @param  \Symfony\Component\Console\Input\InputInterface  $input
-    * @param  int  $status
-    *
-    * @return void
-    */
-public function terminate($input, $state)
-{
-    try
-    {
-        _defer()->dispatchDeferredCalls();
-    }
-    catch (\Exception $ex)
-    {
-        $this->app->make('log')->error($ex);
-    }
-    finally
-    {
-        $this->app->terminate();
-    }
-}
-```
-
 Once all the files are properly configured you can register deferred callbacks using the `_defer` helper function provided globally.
 
 ``` php
