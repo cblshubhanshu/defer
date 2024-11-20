@@ -1,6 +1,6 @@
 {
     "name": "codebrew/defer",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Service to register callbacks to be executed after response is sent to the client",
     "type": "library",
     "autoload": {
