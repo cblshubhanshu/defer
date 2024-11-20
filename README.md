@@ -26,16 +26,6 @@ Add the following to you `composer.json`.
 
 ## Usage
 
-Add the following to your `config/app.php`.
-
-``` php
-'providers' => [
-    // ...
-    Codebrew\Defer\Providers\DeferredServiceProvider::class,
-    // ...
-],
-```
-
 Add the following to your `app/Http/Kernel.php`.
 
 ``` php
