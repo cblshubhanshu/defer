@@ -20,5 +20,15 @@
     "minimum-stability": "stable",
     "require": {
         "laravel/framework": "^8.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Codebrew\\Defer\\Providers\\DeferredServiceProvider"
+            ],
+            "aliases": {
+                "Defer": "Codebrew\\Defer\\Facades\\Defer"
+            }
+        }
     }
 }
