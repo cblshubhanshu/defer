@@ -30,5 +30,6 @@
                 "Defer": "Codebrew\\Defer\\Facades\\Defer"
             }
         }
-    }
+    },
+    "abandoned": "tomshoo/defer"
 }
